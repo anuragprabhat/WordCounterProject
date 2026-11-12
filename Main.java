@@ -1,17 +1,9 @@
 import java.util.Scanner;
 
-/**
- * ============================================================
- *  Main.java : this is the file you RUN.
- *  It shows the menu in the terminal and uses the WordCounter object
- *  (WordCounter.java must be in the same folder).
- * ============================================================
- */
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // creating an object of the class
         WordCounter counter = new WordCounter("");
         boolean textEntered = false;
         int choice;
@@ -32,7 +24,7 @@ public class Main {
             try {
                 choice = Integer.parseInt(input.trim());
             } catch (NumberFormatException e) {
-                choice = 0; // invalid choice
+                choice = 0; 
             }
 
             switch (choice) {
@@ -70,7 +62,7 @@ public class Main {
 
                 case 4:
                     if (textEntered) {
-                        counter.showSmartInsights(); // INNOVATION
+                        counter.showSmartInsights(); 
                     } else {
                         System.out.println("Please enter some text first (option 1).");
                     }
