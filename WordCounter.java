@@ -1,60 +1,32 @@
-/**
- * ============================================================
- *  PROJECT: WORD COUNTER  (Java, OOPs, runs in terminal)
- *  FILE: WordCounter.java  (basic + innovation features in ONE class)
- * ============================================================
- *  PART 1 - BASIC FEATURES : words, characters, sentences, lines,
- *                            word search, longest word
- *
- *  PART 2 - INNOVATION     : "SMART INSIGHTS"  (extra unique feature)
- *                            vowels/consonants, unique words, top keywords,
- *                            palindrome words, average word length,
- *                            reading level, estimated reading time
- *
- *  OOPs concepts used: class, object, constructor, encapsulation
- *  (private variable + getter/setter), methods, this keyword.
- * ============================================================
- */
 public class WordCounter {
 
-    // private data member (ENCAPSULATION)
     private String text;
 
-    // Constructor
     public WordCounter(String text) {
         this.text = text;
     }
 
-    // Getter
     public String getText() {
         return text;
     }
 
-    // Setter
     public void setText(String text) {
         this.text = text;
     }
 
-    // ============================================================
-    //  PART 1 : BASIC FEATURES
-    // ============================================================
-
-    // Count total words
     public int countWords() {
         String trimmed = text.trim();
         if (trimmed.isEmpty()) {
             return 0;
         }
-        String[] words = trimmed.split("\\s+"); // split on one or more spaces
+        String[] words = trimmed.split("\\s+");
         return words.length;
     }
 
-    // Count all characters (including spaces)
     public int countCharacters() {
         return text.length();
     }
 
-    // Count characters excluding spaces, tabs and new lines
     public int countCharactersWithoutSpaces() {
         int count = 0;
         for (int i = 0; i < text.length(); i++) {
@@ -66,7 +38,6 @@ public class WordCounter {
         return count;
     }
 
-    // Count sentences (ends with . ! or ?)
     public int countSentences() {
         int count = 0;
         for (int i = 0; i < text.length(); i++) {
@@ -78,7 +49,6 @@ public class WordCounter {
         return count;
     }
 
-    // Count lines
     public int countLines() {
         if (text.trim().isEmpty()) {
             return 0;
@@ -87,7 +57,6 @@ public class WordCounter {
         return lines.length;
     }
 
-    // Count how many times a particular word appears (ignores upper/lower case)
     public int countOccurrences(String searchWord) {
         String[] words = getCleanWords();
         int count = 0;
@@ -99,7 +68,6 @@ public class WordCounter {
         return count;
     }
 
-    // Find the longest word in the text
     public String findLongestWord() {
         String[] words = getCleanWords();
         String longest = "";
@@ -111,7 +79,6 @@ public class WordCounter {
         return longest;
     }
 
-    // Build the basic report as text (used by both the terminal and the GUI)
     public String getBasicReport() {
         String r = "------------- BASIC REPORT -------------\n";
         r = r + "Words                     : " + countWords() + "\n";
@@ -124,13 +91,10 @@ public class WordCounter {
         return r;
     }
 
-    // Print the basic report in the terminal
     public void displayBasicReport() {
         System.out.print("\n" + getBasicReport());
     }
 
-    // Helper method (used by both parts): returns all words in lowercase,
-    // without punctuation like , . ! ?
     private String[] getCleanWords() {
         String trimmed = text.trim();
         if (trimmed.isEmpty()) {
@@ -146,7 +110,6 @@ public class WordCounter {
                 count++;
             }
         }
-        // copy into an array of exact size
         String[] words = new String[count];
         for (int i = 0; i < count; i++) {
             words[i] = temp[i];
@@ -154,12 +117,6 @@ public class WordCounter {
         return words;
     }
 
-    // ============================================================
-    //  PART 2 : INNOVATION  >>>  SMART INSIGHTS  <<<
-    //  (Everything below is the extra, unique feature of this project)
-    // ============================================================
-
-    // INNOVATION 1: Count vowels
     public int countVowels() {
         String lower = text.toLowerCase();
         int count = 0;
@@ -172,7 +129,6 @@ public class WordCounter {
         return count;
     }
 
-    // INNOVATION 2: Count consonants (letters that are not vowels)
     public int countConsonants() {
         String lower = text.toLowerCase();
         int count = 0;
@@ -187,7 +143,6 @@ public class WordCounter {
         return count;
     }
 
-    // INNOVATION 3: Count unique (different) words
     public int countUniqueWords() {
         String[] words = getCleanWords();
         String[] unique = new String[words.length];
@@ -208,7 +163,6 @@ public class WordCounter {
         return uniqueCount;
     }
 
-    // INNOVATION 4: Top 3 keywords (words with 4+ letters, so "the", "and" are skipped)
     public String getTopKeywords() {
         String[] words = getCleanWords();
         String[] unique = new String[words.length];
@@ -217,7 +171,7 @@ public class WordCounter {
 
         for (int i = 0; i < words.length; i++) {
             if (words[i].length() < 4) {
-                continue; // skip short words
+                continue; 
             }
             boolean found = false;
             for (int j = 0; j < uniqueCount; j++) {
@@ -249,15 +203,14 @@ public class WordCounter {
                 }
             }
             if (maxIndex == -1) {
-                break; // no more words left
+                break; 
             }
             result = result + "   " + rank + ". " + unique[maxIndex] + "  (" + maxCount + " times)\n";
-            counts[maxIndex] = 0; // so it is not picked again
+            counts[maxIndex] = 0; 
         }
         return result;
     }
 
-    // INNOVATION 5: Palindrome checker (helper method)
     private boolean isPalindrome(String word) {
         int left = 0;
         int right = word.length() - 1;
@@ -271,13 +224,12 @@ public class WordCounter {
         return true;
     }
 
-    // INNOVATION 5: Find palindrome words (3 or more letters)
     public String findPalindromes() {
         String[] words = getCleanWords();
         String result = "";
         for (int i = 0; i < words.length; i++) {
             if (words[i].length() >= 3 && isPalindrome(words[i])) {
-                if (!result.contains(words[i])) { // avoid repeating
+                if (!result.contains(words[i])) {
                     result = result + words[i] + " ";
                 }
             }
@@ -288,7 +240,6 @@ public class WordCounter {
         return result.trim();
     }
 
-    // INNOVATION 6: Average length of a word
     public double averageWordLength() {
         String[] words = getCleanWords();
         if (words.length == 0) {
@@ -301,7 +252,6 @@ public class WordCounter {
         return (double) totalLetters / words.length;
     }
 
-    // INNOVATION 7: Reading difficulty level based on average word length
     public String readingLevel() {
         double avg = averageWordLength();
         if (avg == 0) {
@@ -315,7 +265,6 @@ public class WordCounter {
         }
     }
 
-    // INNOVATION 8: Estimated reading time (average person reads ~200 words per minute)
     public String readingTime() {
         int seconds = countWords() * 60 / 200;
         if (seconds < 60) {
@@ -324,7 +273,6 @@ public class WordCounter {
         return (seconds / 60) + " min " + (seconds % 60) + " sec";
     }
 
-    // Build all the innovation features as text (used by both terminal and GUI)
     public String getSmartInsights() {
         String r = "===== SMART INSIGHTS (INNOVATION) =====\n";
         r = r + "Vowels                    : " + countVowels() + "\n";
@@ -339,7 +287,6 @@ public class WordCounter {
         return r;
     }
 
-    // Print the innovation features in the terminal
     public void showSmartInsights() {
         System.out.print("\n" + getSmartInsights());
     }
